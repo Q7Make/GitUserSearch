@@ -16,50 +16,41 @@
     UIImageView *_typeIV;
 }
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
         [self setUp];
     }
-    
     return self;
 }
 
-- (void)setUp
-{
+- (void)setUp {
     //创建图标
     _avatarIV                     = [[UIImageView alloc] init];
     _avatarIV.contentMode         = UIViewContentModeScaleAspectFit;
-    _avatarIV.backgroundColor  = [UIColor yellowColor];
+    _avatarIV.image = [UIImage imageNamed:@"placeholder@2x"];
     [self.contentView addSubview:_avatarIV];
     
     _avatarIV.sd_layout
     .leftSpaceToView(self.contentView, 10)
-    .topSpaceToView(self.contentView, 0)
-    .bottomSpaceToView(self.contentView, 0)
-    .widthIs(30);
-    
-    float w  = ([[UIScreen mainScreen] bounds].size.width - 40)/3;
+    .topSpaceToView(self.contentView, 5)
+    .bottomSpaceToView(self.contentView, 5)
+    .widthIs(50);
     
     _loginLa                  = [[UILabel alloc] init];
     _loginLa.textColor        = [UIColor blackColor];
-    //_loginLa.textAlignment    = NSTextAlignmentCenter;
-    _loginLa.backgroundColor  = [UIColor yellowColor];
     _loginLa.font             = [UIFont systemFontOfSize:13];
     [self.contentView addSubview:_loginLa];
     
     _loginLa.sd_layout
-    .leftSpaceToView(_avatarIV, 0)
-    .topSpaceToView(self.contentView, 0)
+    .leftSpaceToView(_avatarIV, 10)
+    .topEqualToView(_avatarIV)
     .heightIs(20)
-    .widthIs(w);
-    
+    .widthIs(100);
 
     _typeIV                  = [[UIImageView alloc] init];
     _typeIV.contentMode      = UIViewContentModeScaleAspectFit;
-    _typeIV.backgroundColor  = [UIColor yellowColor];
     [self.contentView addSubview:_typeIV];
     
     _typeIV.sd_layout
@@ -70,18 +61,14 @@
 }
 
 // 自绘分割线
-- (void)drawRect:(CGRect)rect
-{
+- (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
-    
     CGContextBeginPath(context);
     CGContextMoveToPoint(context, 0, rect.size.height);
     CGContextAddLineToPoint(context, rect.size.width, rect.size.height);
-    
     CGContextSetStrokeColorWithColor(context, [UIColor colorWithRed:(184)/255.0 green:(186)/255.0 blue:(186)/255.0 alpha:1.0].CGColor);
     CGContextSetLineWidth(context, 0.5f);
     CGContextClosePath(context);
-    
     CGContextDrawPath(context, kCGPathFillStroke);
 }
 
@@ -110,7 +97,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 

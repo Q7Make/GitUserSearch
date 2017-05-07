@@ -15,7 +15,6 @@
 @property (nonatomic, copy) NSString *language;          /**< 个人详细信息*/
 @property (nonatomic, copy) NSString *stars;             /**< 获得星星数*/
 @property (nonatomic, copy) NSMutableArray *dataArr;     /**< 数据*/
-
 - (id)init;
 - (void)requestDataWithUrl:(NSString*)url;
 

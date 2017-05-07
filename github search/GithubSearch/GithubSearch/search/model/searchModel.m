@@ -21,16 +21,14 @@ NSString *const APIUrl = @"https://api.github.com/search/users?q=";
     return self;
 }
 
-- (NSMutableArray *)dataArr
-{
+- (NSMutableArray *)dataArr {
     if (!_dataArr){
         _dataArr = [NSMutableArray array];
     }
     return _dataArr;
 }
 
-- (void)requestDataWithUrl:(NSString*)url
-{
+- (void)requestDataWithUrl:(NSString*)url {
     WS(weakSelf);
     url = [NSString stringWithFormat:@"%@%@",APIUrl,url];
     [NetWork getRequestWithURL:url success:^(id resultDic) {
@@ -39,10 +37,8 @@ NSString *const APIUrl = @"https://api.github.com/search/users?q=";
     }];
 }
 
-- (void)jsonData:(NSDictionary *)resultDic
-{
+- (void)jsonData:(NSDictionary *)resultDic {
     _total_count = [resultDic objectForKey:@"total_count"];
-    NSLog(@"%@,", _total_count);
     NSMutableArray *dataArr = [resultDic objectForKey:@"items"];
     if (dataArr.count > 0 && [dataArr isKindOfClass:[NSArray class]]) {
         for (NSDictionary *dataDict in dataArr) {

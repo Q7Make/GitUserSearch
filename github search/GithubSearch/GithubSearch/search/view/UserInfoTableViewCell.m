@@ -14,10 +14,6 @@
 @implementation UserInfoTableViewCell
 
 {
-    UIImageView *_avatarIV;
-    UILabel *_loginLa;
-    UIImageView *_typeIV;
-    
     UILabel *_reposNameLab;
     UILabel *_desLab;
     UIImageView *_lanImageV;
@@ -26,102 +22,87 @@
     UILabel *_starsLab;
 }
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
         [self setUp];
     }
-    
     return self;
 }
 
-- (void)setUp
-{
-    float h = 20;
-    
+- (void)setUp {
     _reposNameLab = [[UILabel alloc] init];
-    _reposNameLab.textColor = [UIColor blackColor];
-    _reposNameLab.font = [UIFont systemFontOfSize:10];
-    _reposNameLab.backgroundColor  = [UIColor redColor];
+    _reposNameLab.font = [UIFont systemFontOfSize:13];
     [self.contentView addSubview:_reposNameLab];
     _reposNameLab.sd_layout
     .leftSpaceToView(self.contentView, 10)
     .topSpaceToView(self.contentView, 5)
-    .heightIs(h)
+    .heightIs(15)
     .rightSpaceToView(self.contentView, 10);
     
     _desLab = [[UILabel alloc] init];
     _desLab.textColor = [UIColor blackColor];
-    _desLab.font = [UIFont systemFontOfSize:10];
-    _desLab.backgroundColor  = [UIColor yellowColor];
+    _desLab.font = [UIFont systemFontOfSize:12];
     [self.contentView addSubview:_desLab];
     _desLab.sd_layout
     .leftEqualToView(_reposNameLab)
-    .topSpaceToView(_reposNameLab, 0)
-    .heightIs(h)
+    .topSpaceToView(_reposNameLab, 3)
+    .heightIs(12)
     .rightEqualToView(_reposNameLab);
-
+    
+    float w = ([[UIScreen mainScreen] bounds].size.width - 50)/2;
+    
     _lanImageV = [[UIImageView alloc] init];
     _lanImageV.contentMode = UIViewContentModeScaleAspectFit;
-    _lanImageV.backgroundColor = PYSEARCH_RANDOM_COLOR;
-    _lanImageV.image = [UIImage imageNamed:@"btn_individual_nor@2x"];
+    _lanImageV.image = [UIImage imageNamed:@"language@2x"];
     [self.contentView addSubview:_lanImageV];
     _lanImageV.sd_layout
     .leftEqualToView(_desLab)
-    .topSpaceToView(_desLab, 0)
-    .widthIs (20)
-    .heightIs(20);
+    .topSpaceToView(_desLab, 5)
+    .widthIs (15)
+    .heightIs(15);
     
     _lanLab = [[UILabel alloc] init];
     _lanLab.textColor = [UIColor blackColor];
     _lanLab.font = [UIFont systemFontOfSize:10];
-    _lanLab.backgroundColor  = PYSEARCH_RANDOM_COLOR;
     [self.contentView addSubview:_lanLab];
     _lanLab.sd_layout
     .leftSpaceToView(_lanImageV, 0)
     .topEqualToView(_lanImageV)
-    .heightIs(20)
-    .widthIs(50);
+    .heightIs(15)
+    .widthIs(w);
 
     _starsImageV = [[UIImageView alloc] init];
     _starsImageV.contentMode = UIViewContentModeScaleAspectFit;
-    _starsImageV.backgroundColor = PYSEARCH_RANDOM_COLOR;
-    _starsImageV.image = [UIImage imageNamed:@"btn_individual_nor@2x"];
+    _starsImageV.image = [UIImage imageNamed:@"stars@2x"];
     [self.contentView addSubview:_starsImageV];
     _starsImageV.sd_layout
-    .leftSpaceToView(_lanLab,30)
+    .leftSpaceToView(_lanLab,0)
     .topEqualToView(_lanLab)
-    .widthIs (20)
-    .heightIs(20);
+    .widthIs (15)
+    .heightIs(15);
     
     _starsLab = [[UILabel alloc] init];
     _starsLab.textColor = [UIColor blackColor];
     _starsLab.font = [UIFont systemFontOfSize:10];
-    _starsLab.backgroundColor  = PYSEARCH_RANDOM_COLOR;
     [self.contentView addSubview:_starsLab];
     _starsLab.sd_layout
     .leftSpaceToView(_starsImageV, 0)
     .topEqualToView(_starsImageV)
-    .heightIs(20)
-    .widthIs(50);
-    
+    .heightIs(15)
+    .widthIs(w);
 }
 
 // 自绘分割线
-- (void)drawRect:(CGRect)rect
-{
+- (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
-    
     CGContextBeginPath(context);
     CGContextMoveToPoint(context, 0, rect.size.height);
     CGContextAddLineToPoint(context, rect.size.width, rect.size.height);
-    
     CGContextSetStrokeColorWithColor(context, [UIColor colorWithRed:(184)/255.0 green:(186)/255.0 blue:(186)/255.0 alpha:1.0].CGColor);
     CGContextSetLineWidth(context, 0.5f);
     CGContextClosePath(context);
-    
     CGContextDrawPath(context, kCGPathFillStroke);
 }
 

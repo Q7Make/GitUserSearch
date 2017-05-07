@@ -21,16 +21,14 @@ NSString *const APIUrl1 = @"https://api.github.com/search/users?q=";
     return self;
 }
 
-- (NSMutableArray *)dataArr
-{
+- (NSMutableArray *)dataArr {
     if (!_dataArr){
         _dataArr = [NSMutableArray array];
     }
     return _dataArr;
 }
 
-- (void)requestDataWithUrl:(NSString*)url
-{
+- (void)requestDataWithUrl:(NSString*)url {
     WS(weakSelf);
     [NetWork getRequestWithURL:url success:^(id resultDic) {
         [weakSelf jsonData:resultDic];
@@ -39,10 +37,8 @@ NSString *const APIUrl1 = @"https://api.github.com/search/users?q=";
     }];
 }
 
-- (void)jsonData:(NSMutableArray *)resultDic
-{
+- (void)jsonData:(NSMutableArray *)resultDic {
     //NSLog(@"%@", resultDic);
-    
     if (resultDic.count > 0 && [resultDic isKindOfClass:[NSArray class]]) {
         for (NSDictionary *dataDict in resultDic) {
             UserInfoModel *model = [[UserInfoModel alloc] init];
@@ -50,13 +46,11 @@ NSString *const APIUrl1 = @"https://api.github.com/search/users?q=";
             model.descriptionStr = [dataDict objectForKey:@"description"];
             model.language = [dataDict objectForKey:@"language"];
             model.stars = [NSString stringWithFormat:@"%@", [dataDict objectForKey:@"stargazers_count"]];
-            
             [self.dataArr addObject:model];
         }
     }
     NSNotification *notice = [NSNotification notificationWithName:@"reposList" object:nil];
     [[NSNotificationCenter defaultCenter] postNotification:notice];
 }
-
 
 @end

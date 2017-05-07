@@ -13,6 +13,7 @@
 #import "UserListTableViewCell.h"
 #import "SVProgressHUD.h"
 #import "MBProgressHUD.h"
+#import "NetWork.h"
 
 NSString *const CELL_REUSE_ID = @"CELL_REUSE_ID";
 
@@ -38,12 +39,17 @@ NSString *const CELL_REUSE_ID = @"CELL_REUSE_ID";
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(notice) name:@"userList" object:nil];
     
+    [self creatUI];
+    [self changeBackBtn];
+}
+
+- (void)creatUI {
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     //去掉弹性
     _tableView.bounces = NO;
-    _tableView.rowHeight = 45;
+    _tableView.rowHeight = 60;
     //去掉分割线
     [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     //设置tableview背景图
@@ -51,6 +57,12 @@ NSString *const CELL_REUSE_ID = @"CELL_REUSE_ID";
     _tableView.backgroundView = imageV;
     [self.view addSubview:_tableView];
     
+    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _hud.mode = MBProgressHUDModeDeterminate;
+    _hud.labelText = @"Loading...";
+}
+
+- (void)changeBackBtn {
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0, 0, 30, 30)];
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -58,15 +70,6 @@ NSString *const CELL_REUSE_ID = @"CELL_REUSE_ID";
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc] initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem = buttonItem;
     [btn addTarget:self action:@selector(BackButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    _userListModel = [[searchModel alloc] init];
-    [_userListModel requestDataWithUrl:_userStr];
-    NSLog(@"STR= %@",_userStr);
-    
-    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    _hud.mode = MBProgressHUDModeAnnularDeterminate;
-    _hud.labelText = @"Loading。。。";
-    
 }
 
 - (void)BackButtonClick:(UIButton *)sender
@@ -76,6 +79,8 @@ NSString *const CELL_REUSE_ID = @"CELL_REUSE_ID";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    _userListModel = [[searchModel alloc] init];
+    [_userListModel requestDataWithUrl:_userStr];
 }
 
 - (void)notice{
@@ -110,7 +115,6 @@ NSString *const CELL_REUSE_ID = @"CELL_REUSE_ID";
     //设置值
     searchModel *model = [_userListArr objectAtIndex:indexPath.row];
     [cell setAvatarIV:model.avatar_url userName:model.login userType:model.type];
-    
     //cell的点击效果
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     

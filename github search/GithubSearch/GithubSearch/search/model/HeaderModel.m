@@ -21,8 +21,7 @@
     return self;
 }
 
-- (void)requestDataWithUrl:(NSString*)url
-{
+- (void)requestDataWithUrl:(NSString*)url {
     WS(weakSelf);
     [NetWork getRequestWithURL:url success:^(id resultDic) {
         [weakSelf jsonData:resultDic];
@@ -30,17 +29,15 @@
     }];
 }
 
-- (void)jsonData:(NSDictionary *)resultDic
-{
+- (void)jsonData:(NSDictionary *)resultDic {
     NSLog(@"%@", resultDic);
     //说明not found
     if ([[resultDic allKeys] containsObject:@"message"]) {
         NSLog(@"没有数据");
     } else {
         [self setValuesForKeysWithDictionary:resultDic];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"header" object:nil];
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"header" object:nil];
 }
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key{

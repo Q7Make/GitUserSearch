@@ -18,7 +18,6 @@
 @property (nonatomic, copy) NSString *repos_url;     /**< repos情况*/
 @property (nonatomic, copy) NSString *total_count;   /**< 总共多少人*/
 @property (nonatomic, copy) NSMutableArray *dataArr; /**< 数据数据*/
-
 - (id)init;
 - (void)requestDataWithUrl:(NSString*)url;
 

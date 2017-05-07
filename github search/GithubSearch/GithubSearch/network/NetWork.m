@@ -14,8 +14,7 @@
 
 #define WS(weakSelf) __weak typeof(self) weakSelf=self
 
-+ (NetWork *)shareDataNetWork
-{
++ (NetWork *)shareDataNetWork {
     static NetWork *dataNetWork = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -24,16 +23,8 @@
     return dataNetWork;
 }
 
-+ (void)isNetWorkOk
-{
-    /**
-     AFNetworkReachabilityStatusUnknown          = -1,  // 未知
-     AFNetworkReachabilityStatusNotReachable     = 0,   // 无连接
-     AFNetworkReachabilityStatusReachableViaWWAN = 1,   // 蜂窝
-     AFNetworkReachabilityStatusReachableViaWiFi = 2,   // wifi
-     */
++ (void)isNetWorkOk {
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
-    
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         if (status == 0) {
             [SVProgressHUD showText:@"请检查网络连接" duration:1.5];
@@ -43,8 +34,7 @@
 }
 
 //GET
-+ (void)getRequestWithURL:(NSString *)url success:(void (^)(id resultDic))success failure:(void (^)(NSError * error))failure
-{
++ (void)getRequestWithURL:(NSString *)url success:(void (^)(id resultDic))success failure:(void (^)(NSError * error))failure {
     [[self class] isNetWorkOk];
     WS(weakSelf);
     //管理器
@@ -56,19 +46,18 @@
              if (success && responseObject) {
                  success(responseObject);
              }
-             NSLog(@"这里打印请求成功要做的事");
+             NSLog(@"请求成功");
          }
          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull   error) {
              if (failure) {
                  failure(error);
              }
-             NSLog(@"%@",error);  //这里打印错误信息
+             NSLog(@"请求失败：%@",error);  //这里打印错误信息
              [weakSelf requestFailWithJsonData:error WithTag:0];
          }];
 }
 
-+ (void)requestFailWithJsonData:(NSError*)json WithTag:(NSInteger)tag
-{
++ (void)requestFailWithJsonData:(NSError*)json WithTag:(NSInteger)tag {
     if (json.code == -1009) {
         [SVProgressHUD showText:@"请检查网络连接" duration:1.5];
     } else if (json.code == -1004) {
@@ -81,9 +70,8 @@
 }
 
 #pragma mark 取消网络请求
-+ (void)cancelRequest
-{
-    NSLog(@"cancelRequest");
++ (void)cancelRequest {
+    NSLog(@"cancelRequest...");
     [[[[self class] sharedManager] operationQueue] cancelAllOperations];
 }
 
