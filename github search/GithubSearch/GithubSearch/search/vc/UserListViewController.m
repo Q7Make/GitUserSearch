@@ -11,6 +11,8 @@
 #import "searchModel.h"
 #import "UserInfoViewController.h"
 #import "UserListTableViewCell.h"
+#import "SVProgressHUD.h"
+#import "MBProgressHUD.h"
 
 NSString *const CELL_REUSE_ID = @"CELL_REUSE_ID";
 
@@ -20,6 +22,7 @@ NSString *const CELL_REUSE_ID = @"CELL_REUSE_ID";
     NSMutableArray *_userListArr;
     searchModel *_userListModel;
     UITableView *_tableView;
+    MBProgressHUD *_hud;
 }
 
 @end
@@ -31,7 +34,6 @@ NSString *const CELL_REUSE_ID = @"CELL_REUSE_ID";
     // Do any additional setup after loading the view.
     
     self.title = _userStr;
-    //self.view.backgroundColor = PYSEARCH_RANDOM_COLOR;
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(notice) name:@"userList" object:nil];
@@ -45,8 +47,8 @@ NSString *const CELL_REUSE_ID = @"CELL_REUSE_ID";
     //去掉分割线
     [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     //设置tableview背景图
-//    UIImageView *imageV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg"]];
-//    _tableView.backgroundView = imageV;
+    UIImageView *imageV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg"]];
+    _tableView.backgroundView = imageV;
     [self.view addSubview:_tableView];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -60,6 +62,11 @@ NSString *const CELL_REUSE_ID = @"CELL_REUSE_ID";
     _userListModel = [[searchModel alloc] init];
     [_userListModel requestDataWithUrl:_userStr];
     NSLog(@"STR= %@",_userStr);
+    
+    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _hud.mode = MBProgressHUDModeAnnularDeterminate;
+    _hud.labelText = @"Loading。。。";
+    
 }
 
 - (void)BackButtonClick:(UIButton *)sender
@@ -69,16 +76,23 @@ NSString *const CELL_REUSE_ID = @"CELL_REUSE_ID";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
-//    _userListModel = [[searchModel alloc] init];
-//    [_userListModel requestDataWithUrl:_userStr];
-//    NSLog(@"STR= %@",_userStr);
 }
 
 - (void)notice{
-    [_userListArr removeAllObjects];
-    _userListArr = [NSMutableArray arrayWithArray:_userListModel.dataArr];
-    [_tableView reloadData];
+    
+    [_hud hide:YES];
+    
+    if (_userListModel.dataArr.count == 0) {
+        [SVProgressHUD showText:@"未找到，请重新输入。" duration:2];
+        dispatch_time_t time=dispatch_time(DISPATCH_TIME_NOW, 2*NSEC_PER_SEC);
+        dispatch_after(time, dispatch_get_main_queue(), ^{
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+    } else {
+        [_userListArr removeAllObjects];
+        _userListArr = [NSMutableArray arrayWithArray:_userListModel.dataArr];
+        [_tableView reloadData];
+    }
 }
 
 //分区的行数
@@ -87,17 +101,15 @@ NSString *const CELL_REUSE_ID = @"CELL_REUSE_ID";
     return _userListArr.count;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UserListTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if (cell == nil) {
         cell = [[UserListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CELL_REUSE_ID];
     }
-    
+    //设置值
     searchModel *model = [_userListArr objectAtIndex:indexPath.row];
     [cell setAvatarIV:model.avatar_url userName:model.login userType:model.type];
-    //NSLog(@"==%@",model.avatar_url);
     
     //cell的点击效果
     cell.selectionStyle = UITableViewCellSelectionStyleNone;

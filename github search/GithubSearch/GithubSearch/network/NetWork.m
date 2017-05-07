@@ -12,6 +12,8 @@
 
 @implementation NetWork
 
+#define WS(weakSelf) __weak typeof(self) weakSelf=self
+
 + (NetWork *)shareDataNetWork
 {
     static NetWork *dataNetWork = nil;
@@ -33,7 +35,6 @@
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-        
         if (status == 0) {
             [SVProgressHUD showText:@"请检查网络连接" duration:1.5];
             return;
@@ -45,34 +46,29 @@
 + (void)getRequestWithURL:(NSString *)url success:(void (^)(id resultDic))success failure:(void (^)(NSError * error))failure
 {
     [[self class] isNetWorkOk];
-    
+    WS(weakSelf);
     //管理器
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
     manager.requestSerializer.timeoutInterval = 20;
-    
     [manager GET:url parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
-        
     }
          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-             
              if (success && responseObject) {
                  success(responseObject);
              }
              NSLog(@"这里打印请求成功要做的事");
          }
          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull   error) {
-             
              if (failure) {
                  failure(error);
              }
              NSLog(@"%@",error);  //这里打印错误信息
+             [weakSelf requestFailWithJsonData:error WithTag:0];
          }];
 }
 
 + (void)requestFailWithJsonData:(NSError*)json WithTag:(NSInteger)tag
 {
-    NSLog(@"请求失败---%@", json);
     if (json.code == -1009) {
         [SVProgressHUD showText:@"请检查网络连接" duration:1.5];
     } else if (json.code == -1004) {

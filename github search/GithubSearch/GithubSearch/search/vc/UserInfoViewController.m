@@ -53,8 +53,8 @@ NSString *const CELL_REUSE_ID1 = @"CELL_REUSE_ID";
     //去掉分割线
     [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     //设置tableview背景图
-    //    UIImageView *imageV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg"]];
-    //    _tableView.backgroundView = imageV;
+        UIImageView *imageV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg"]];
+        _tableView.backgroundView = imageV;
     [self.view addSubview:_tableView];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];

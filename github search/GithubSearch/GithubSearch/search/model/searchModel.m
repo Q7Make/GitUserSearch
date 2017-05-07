@@ -42,6 +42,7 @@ NSString *const APIUrl = @"https://api.github.com/search/users?q=";
 - (void)jsonData:(NSDictionary *)resultDic
 {
     _total_count = [resultDic objectForKey:@"total_count"];
+    NSLog(@"%@,", _total_count);
     NSMutableArray *dataArr = [resultDic objectForKey:@"items"];
     if (dataArr.count > 0 && [dataArr isKindOfClass:[NSArray class]]) {
         for (NSDictionary *dataDict in dataArr) {
@@ -51,8 +52,8 @@ NSString *const APIUrl = @"https://api.github.com/search/users?q=";
             [self.dataArr addObject:model];
         }
     }
-    NSNotification *notice = [NSNotification notificationWithName:@"userList" object:nil];
-    [[NSNotificationCenter defaultCenter] postNotification:notice];
+        NSNotification *notice = [NSNotification notificationWithName:@"userList" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotification:notice];
 }
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key{
