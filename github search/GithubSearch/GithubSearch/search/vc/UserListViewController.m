@@ -47,16 +47,13 @@ NSString *const CELL_REUSE_ID = @"CELL_REUSE_ID";
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    //去掉弹性
     _tableView.bounces = NO;
     _tableView.rowHeight = 60;
-    //去掉分割线
     [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    //设置tableview背景图
     UIImageView *imageV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg"]];
     _tableView.backgroundView = imageV;
     [self.view addSubview:_tableView];
-    
+    //添加HUD
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     _hud.mode = MBProgressHUDModeDeterminate;
     _hud.labelText = @"Loading...";
@@ -115,9 +112,7 @@ NSString *const CELL_REUSE_ID = @"CELL_REUSE_ID";
     //设置值
     searchModel *model = [_userListArr objectAtIndex:indexPath.row];
     [cell setAvatarIV:model.avatar_url userName:model.login userType:model.type];
-    //cell的点击效果
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
     return cell;
 }
 

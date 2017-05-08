@@ -10,8 +10,6 @@
 #import "NetWork.h"
 #import "Utilities.h"
 
-#define WS(weakSelf) __weak typeof(self) weakSelf=self
-
 @implementation HeaderModel
 
 - (id)init{
@@ -30,7 +28,7 @@
 }
 
 - (void)jsonData:(NSDictionary *)resultDic {
-    NSLog(@"%@", resultDic);
+    //NSLog(@"%@", resultDic);
     //说明not found
     if ([[resultDic allKeys] containsObject:@"message"]) {
         NSLog(@"没有数据");

@@ -33,7 +33,7 @@
 
 - (void)setUp {
     _reposNameLab = [[UILabel alloc] init];
-    _reposNameLab.font = [UIFont systemFontOfSize:13];
+    _reposNameLab.font = [UIFont boldSystemFontOfSize:13];
     [self.contentView addSubview:_reposNameLab];
     _reposNameLab.sd_layout
     .leftSpaceToView(self.contentView, 10)
@@ -43,7 +43,7 @@
     
     _desLab = [[UILabel alloc] init];
     _desLab.textColor = [UIColor blackColor];
-    _desLab.font = [UIFont systemFontOfSize:12];
+    _desLab.font = [UIFont systemFontOfSize:11];
     [self.contentView addSubview:_desLab];
     _desLab.sd_layout
     .leftEqualToView(_reposNameLab)

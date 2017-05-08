@@ -8,8 +8,8 @@
 
 #import "UserInfoModel.h"
 #import "NetWork.h"
+#import "Utilities.h"
 
-#define WS(weakSelf) __weak typeof(self) weakSelf=self
 NSString *const APIUrl1 = @"https://api.github.com/search/users?q=";
 
 @implementation UserInfoModel

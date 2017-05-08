@@ -8,6 +8,10 @@
 
 #import "UserListTableViewCell.h"
 #import "SDAutoLayout.h"
+#import "Utilities.h"
+#import "UIImageView+WebCache.h"
+
+NSString *const User = @"User";
 
 @implementation UserListTableViewCell
 {
@@ -29,7 +33,9 @@
     //创建图标
     _avatarIV                     = [[UIImageView alloc] init];
     _avatarIV.contentMode         = UIViewContentModeScaleAspectFit;
-    _avatarIV.image = [UIImage imageNamed:@"placeholder@2x"];
+    //_avatarIV.image = [UIImage imageNamed:@"placeholder@2x"];
+    _avatarIV.layer.cornerRadius = 25;
+    _avatarIV.clipsToBounds = YES;
     [self.contentView addSubview:_avatarIV];
     
     _avatarIV.sd_layout
@@ -64,7 +70,7 @@
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextBeginPath(context);
-    CGContextMoveToPoint(context, 0, rect.size.height);
+    CGContextMoveToPoint(context, 70, rect.size.height);
     CGContextAddLineToPoint(context, rect.size.width, rect.size.height);
     CGContextSetStrokeColorWithColor(context, [UIColor colorWithRed:(184)/255.0 green:(186)/255.0 blue:(186)/255.0 alpha:1.0].CGColor);
     CGContextSetLineWidth(context, 0.5f);
@@ -74,20 +80,25 @@
 
 - (void)setAvatarIV:(NSString *)imageUrl userName:(NSString*)loginStr userType:(NSString *)typeStr {
     
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
-        UIImage *image = [UIImage imageWithData:imageData];
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            _avatarIV.image = image;
-        });
-    });
-    
-    _loginLa.text = loginStr;
-    
-    if ([typeStr isEqualToString:@"User"]) {
-        _typeIV.image = [UIImage imageNamed:@"btn_individual_nor@2x"];
-    } else {
-        _typeIV.image = [UIImage imageNamed:@"btn_ home_nor@2x"];
+    if ([Utilities isBlankString:_loginLa.text]) {
+//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
+//            UIImage *image = [UIImage imageWithData:imageData];
+//            dispatch_sync(dispatch_get_main_queue(), ^{
+//                _avatarIV.image = image;
+//            });
+//        });
+        
+        [_avatarIV sd_setImageWithURL:[NSURL URLWithString:imageUrl]
+                     placeholderImage:[UIImage imageNamed:@"placeholder@2x"]];
+        
+        _loginLa.text = loginStr;
+        
+        if ([typeStr isEqualToString:User]) {
+            _typeIV.image = [UIImage imageNamed:@"btn_individual_nor@2x"];
+        } else {
+            _typeIV.image = [UIImage imageNamed:@"btn_ home_nor@2x"];
+        }
     }
 }
 

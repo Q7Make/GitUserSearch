@@ -11,6 +11,8 @@
 
 @interface Utilities : NSObject
 
+#define WS(weakSelf) __weak typeof(self) weakSelf=self
+
 + (BOOL) isBlankString:(NSString *)string;
 
 @end

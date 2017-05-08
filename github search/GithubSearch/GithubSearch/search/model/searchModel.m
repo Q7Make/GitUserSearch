@@ -8,8 +8,8 @@
 
 #import "searchModel.h"
 #import "NetWork.h"
+#import "Utilities.h"
 
-#define WS(weakSelf) __weak typeof(self) weakSelf=self
 NSString *const APIUrl = @"https://api.github.com/search/users?q=";
 
 @implementation searchModel
@@ -44,7 +44,7 @@ NSString *const APIUrl = @"https://api.github.com/search/users?q=";
         for (NSDictionary *dataDict in dataArr) {
             searchModel *model = [[searchModel alloc] init];
             [model setValuesForKeysWithDictionary:dataDict];
-            NSLog(@"%@", model.login);
+            //NSLog(@"%@", model.login);
             [self.dataArr addObject:model];
         }
     }
