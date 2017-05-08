@@ -160,7 +160,7 @@
 		9FC696D41EBD7684002D45E7 /* UIColor+PYSearchExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+PYSearchExtension.m"; sourceTree = "<group>"; };
 		9FC696D51EBD7684002D45E7 /* UIView+PYSearchExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PYSearchExtension.h"; sourceTree = "<group>"; };
 		9FC696D61EBD7684002D45E7 /* UIView+PYSearchExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PYSearchExtension.m"; sourceTree = "<group>"; };
-		9FC696E41EBD7CD5002D45E7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		9FC696E41EBD7CD5002D45E7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../Default-568h@2x.png"; sourceTree = "<group>"; };
 		9FC696E61EBD7D9C002D45E7 /* UserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListViewController.h; sourceTree = "<group>"; };
 		9FC696E71EBD7D9C002D45E7 /* UserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListViewController.m; sourceTree = "<group>"; };
 		9FC696E91EBD7DAA002D45E7 /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoViewController.h; sourceTree = "<group>"; };
@@ -294,7 +294,6 @@
 		9FC696801EBD5FF6002D45E7 = {
 			isa = PBXGroup;
 			children = (
-				9FC696E41EBD7CD5002D45E7 /* Default-568h@2x.png */,
 				9FC6968B1EBD5FF6002D45E7 /* GithubSearch */,
 				9FC696A51EBD5FF7002D45E7 /* GithubSearchTests */,
 				9FC696B01EBD5FF7002D45E7 /* GithubSearchUITests */,
@@ -380,6 +379,7 @@
 		9FC696C11EBD6688002D45E7 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				9FC696E41EBD7CD5002D45E7 /* Default-568h@2x.png */,
 				9F6607671EBFFC77004A1094 /* userbg@2x.png */,
 				9FD0F7111EBF5CDA0037AC29 /* placeholder@2x.png */,
 				9FC697401EBF5594002D45E7 /* stars@2x.png */,

@@ -9,7 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface UserInfoTableViewCell : UITableViewCell
-
 - (void)setName:(NSString *)name descriptin:(NSString *)description language:(NSString *)language stars:(NSString *)starsCount;
-
 @end

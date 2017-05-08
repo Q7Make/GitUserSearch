@@ -22,6 +22,5 @@
 @property (nonatomic, strong) UILabel *reposLab1;
 @property (nonatomic, strong) UILabel *reposLab2;
 
-
 @end
 

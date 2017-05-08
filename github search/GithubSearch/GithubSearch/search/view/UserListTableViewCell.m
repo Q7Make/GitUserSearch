@@ -88,12 +88,10 @@ NSString *const User = @"User";
 //                _avatarIV.image = image;
 //            });
 //        });
-        
+        //自己实现了异步加载，但没有缓存，最后还是用了sdweb
         [_avatarIV sd_setImageWithURL:[NSURL URLWithString:imageUrl]
                      placeholderImage:[UIImage imageNamed:@"placeholder@2x"]];
-        
         _loginLa.text = loginStr;
-        
         if ([typeStr isEqualToString:User]) {
             _typeIV.image = [UIImage imageNamed:@"btn_individual_nor@2x"];
         } else {

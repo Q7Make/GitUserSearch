@@ -36,14 +36,12 @@ NSString *const BIOTEXT = @"This guy is too lazy to leave anything here!";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     self.title = _userName;
     
     [self creatUI];
     [self changeBackBtn];
     [self creatHeadView];
-    
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(notice) name:@"reposList" object:nil];
@@ -93,16 +91,13 @@ NSString *const BIOTEXT = @"This guy is too lazy to leave anything here!";
     
     _userInfoModel = [[UserInfoModel alloc] init];
     [_userInfoModel requestDataWithUrl:_reposUrl];
-    
     _headerModel = [[HeaderModel alloc] init];
     [_headerModel requestDataWithUrl:_userUrl];
     
 }
 
 - (void)notice {
-    
     [self removeHUD];
-    
     [_userListArr removeAllObjects];
     _userListArr = [NSMutableArray arrayWithArray:_userInfoModel.dataArr];
     //NSLog(@"------%lu", (unsigned long)_userListArr.count);
@@ -134,32 +129,16 @@ NSString *const BIOTEXT = @"This guy is too lazy to leave anything here!";
     _headerV.reposLab1.text = [NSString stringWithFormat:@"%@", _headerModel.public_repos];
 }
 
-- (UIImage *)changeImage:(UIImage *)image {
-    CIImage *ciImage = [[CIImage alloc]initWithImage:image];
-    CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
-    [filter setValue:ciImage forKey:kCIInputImageKey];
-    [filter setValue:@1.5f forKey: @"inputRadius"];
-    CIImage *result = [filter valueForKey:kCIOutputImageKey];
-    CIContext *context = [CIContext contextWithOptions:nil];
-    CGImageRef outImage = [context createCGImage: result fromRect:[result extent]];
-    UIImage * blurImage = [UIImage imageWithCGImage:outImage];
-    CGImageRelease(outImage);
-    
-    return blurImage;
-}
-
 - (void)creatHeadView {
     _headerV = [[HeaderView alloc] init];
    
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 140;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     return _headerV;
 }
 
@@ -178,7 +157,6 @@ NSString *const BIOTEXT = @"This guy is too lazy to leave anything here!";
     //NSLog(@"==%@",model.name);
     //cell的点击效果
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
     return cell;
 }
 
@@ -186,6 +164,5 @@ NSString *const BIOTEXT = @"This guy is too lazy to leave anything here!";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 @end

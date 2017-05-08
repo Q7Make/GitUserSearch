@@ -10,8 +10,6 @@
 #import "NetWork.h"
 #import "Utilities.h"
 
-NSString *const APIUrl1 = @"https://api.github.com/search/users?q=";
-
 @implementation UserInfoModel
 
 - (id)init{

@@ -10,13 +10,11 @@
 #import "SDAutoLayout.h"
 #import "Utilities.h"
 
-
 NSString *const FOLLOWER = @"FOLLOWER";
 NSString *const FOLLOWING = @"FOLLOWING";
 NSString *const REPOS = @"REPOS";
 
 @implementation HeaderView
-
 
 - (instancetype)init {
     self = [super init];
@@ -148,6 +146,19 @@ NSString *const REPOS = @"REPOS";
     .heightIs(20)
     .widthIs(w);
 }
-
+//图片半透明处理
+- (UIImage *)changeImage:(UIImage *)image {
+    CIImage *ciImage = [[CIImage alloc]initWithImage:image];
+    CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
+    [filter setValue:ciImage forKey:kCIInputImageKey];
+    [filter setValue:@1.5f forKey: @"inputRadius"];
+    CIImage *result = [filter valueForKey:kCIOutputImageKey];
+    CIContext *context = [CIContext contextWithOptions:nil];
+    CGImageRef outImage = [context createCGImage: result fromRect:[result extent]];
+    UIImage * blurImage = [UIImage imageWithCGImage:outImage];
+    CGImageRelease(outImage);
+    
+    return blurImage;
+}
 
 @end

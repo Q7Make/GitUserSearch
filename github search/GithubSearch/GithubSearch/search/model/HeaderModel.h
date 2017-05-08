@@ -16,6 +16,5 @@
 @property (nonatomic, copy) NSString *followers;    /**< follower*/
 @property (nonatomic, copy) NSString *following;    /**< following*/
 @property (nonatomic, copy) NSString *public_repos; /**< repos数*/
-- (id)init;
 - (void)requestDataWithUrl:(NSString*)url;
 @end
